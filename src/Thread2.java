@@ -13,16 +13,17 @@ public class Thread2 extends Thread {
 						char lleno_no_referenciado = (char)254;
 						char vacio = (char)0;
 						if(pagina[0] == vacio || pagina[0] == lleno_no_referenciado) {
-							pagina[0] = (char)(pagina[0]>>1);
-							pagina[0] = (char)(pagina[0] | (char) 128);
-							
-							System.out.println(i+ "," + (pagina[0]>>1));
+							pagina[1] = (char)(pagina[1]>>1);
+						} 
+						if(pagina[0] == lleno_referenciado) {
+							pagina[1] = (char)(pagina[1]>>1);
+							pagina[1] = (char)(pagina[1] | (char) 128);
+							pagina[0] = lleno_no_referenciado;
 						}
-						MMU.getTablaPaginas()[i][1] = (char)100;;
 						i+=1;
-						
 					}
 				}
+				
 			//}
 		}
 		catch(Exception e){
