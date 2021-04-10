@@ -9,17 +9,17 @@ public class ThreadConsumidor extends Thread {
 
 	public void run(){
 		try {
-			while(actual < Mercado.numProductos){
-				synchronized (Mercado.getColaEsperaConsumidor()) {
-					if(Mercado.getColaEsperaConsumidor().size()>0){
+			while(actual < MMU.numProductos){
+				synchronized (MMU.getColaEsperaConsumidor()) {
+					if(MMU.getColaEsperaConsumidor().size()>0){
 						Producto x= null;
-						for (int i = 0; i < Mercado.getColaEsperaConsumidor().size(); i++) {
-							if(Mercado.getColaEsperaConsumidor().get(i).getTipo().equals(tipo)){
-								x = Mercado.getColaEsperaConsumidor().remove(i);
+						for (int i = 0; i < MMU.getColaEsperaConsumidor().size(); i++) {
+							if(MMU.getColaEsperaConsumidor().get(i).getTipo().equals(tipo)){
+								x = MMU.getColaEsperaConsumidor().remove(i);
 								actual++;
 								synchronized (System.out){
 									System.out.println(String.format("Consumidor: \t\tProducto Consumido Producto(%d)", x.hashCode()));
-									System.out.println("Cola consumidores: \tHay "+Mercado.getColaEsperaConsumidor().size()+" y el max es: "+ Mercado.tamanoBuzonConsumidor);
+									System.out.println("Cola consumidores: \tHay "+MMU.getColaEsperaConsumidor().size()+" y el max es: "+ MMU.tamanoBuzonConsumidor);
 								}
 								break;
 							}

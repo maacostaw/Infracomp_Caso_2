@@ -1,28 +1,28 @@
 
 
-public class ThreadIntermediario extends Thread {
+public class Thread1 extends Thread {
 
 	private int totalPasar;
 	private int actual=0;
 	
-	public ThreadIntermediario(int totalPasar){
+	public Thread1(int totalPasar){
 		this.totalPasar= totalPasar;
 	}
 
 	public void run(){
 		try{
 			while(totalPasar>actual){
-				synchronized (Mercado.getColaEsperaIntermedia()) {
-					if(Mercado.getColaEsperaProductor().size()>0 && Mercado.getColaEsperaIntermedia().getLista().size()<1 ) {
-						Producto x = Mercado.getColaEsperaProductor().poll();
+				synchronized (MMU.getColaEsperaIntermedia()) {
+					if(MMU.getColaEsperaProductor().size()>0 && MMU.getColaEsperaIntermedia().getLista().size()<1 ) {
+						Producto x = MMU.getColaEsperaProductor().poll();
 						synchronized (System.out){
 							System.out.println("Intermediario 1: \tRecibe el producto " + x.hashCode());
 						}
-						Mercado.getColaEsperaIntermedia().meter(x);
+						MMU.getColaEsperaIntermedia().meter(x);
 						actual++;
 						synchronized (System.out){
 							String mensaje = String.format("Intermediario 1: \tPasa el producto %d, faltan por pasar %d", 
-									Mercado.getColaEsperaIntermedia().getLista().get(0).hashCode(),
+									MMU.getColaEsperaIntermedia().getLista().get(0).hashCode(),
 									totalPasar - actual);
 							System.out.println(mensaje);
 						}

@@ -9,12 +9,12 @@ public class ThreadProductor extends Thread {
 
 	public void run(){
 		try{
-			while(actual < Mercado.numProductos) {
-				synchronized(Mercado.getColaEsperaProductor()){
-					if(Mercado.getColaEsperaProductor().size() < Mercado.tamanoBuzonProductor){
+			while(actual < MMU.numProductos) {
+				synchronized(MMU.getColaEsperaProductor()){
+					if(MMU.getColaEsperaProductor().size() < MMU.tamanoBuzonProductor){
 						Producto nuevo = new Producto(tipo);
-						Mercado.getColaEsperaProductor().add(nuevo);
-						System.out.println("Cola productores: \tHay "+Mercado.getColaEsperaProductor().size()+" y el max es: "+ Mercado.tamanoBuzonProductor);
+						MMU.getColaEsperaProductor().add(nuevo);
+						System.out.println("Cola productores: \tHay "+MMU.getColaEsperaProductor().size()+" y el max es: "+ MMU.tamanoBuzonProductor);
 						actual++;
 						synchronized (System.out){
 							System.out.println(String.format("Productor: \t\tNuevo Producto Producto(%d)", nuevo.hashCode()));
