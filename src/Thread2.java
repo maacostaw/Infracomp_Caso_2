@@ -5,25 +5,19 @@ public class Thread2 extends Thread {
 	public void run() {
 		try{
 			while(!MMU.getTermino()) {
-				Thread.sleep(1);
 				synchronized(MMU.getTablaPaginas()){
-					int i = 0;
-					while(i<MMU.paginas) {
-						char[] pagina = MMU.getTablaPaginas()[i];
-						char lleno_referenciado = (char)255;
-						char lleno_no_referenciado = (char)254;
-						char vacio = (char)0;
-						if(pagina[0] == vacio || pagina[0] == lleno_no_referenciado) {
-							pagina[1] = (char)(pagina[1]>>1);
-						} 
-						if(pagina[0] == lleno_referenciado) {
-							pagina[1] = (char)(pagina[1]>>1);
+					for(int pag = 0; pag < MMU.paginas; pag++) {
+						char[] pagina = MMU.getTablaPaginas()[pag];
+						//Realizo el corrimiento
+						pagina[1] = (char)(pagina[1]>>1);
+						//Si se referencio la pagina lo añado al registro
+						if(pagina[0] == MMU.lleno_referenciado) {
 							pagina[1] = (char)(pagina[1] | (char) 128);
-							pagina[0] = lleno_no_referenciado;
+							MMU.modificarTablaPaginas(pag, MMU.lleno_no_referenciado);
 						}
-						i+=1;
 					}
 				}
+				Thread.sleep(1);
 			}
 		}
 		catch(Exception e){

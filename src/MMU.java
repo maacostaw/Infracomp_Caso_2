@@ -4,14 +4,17 @@ import java.util.LinkedList;
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class MMU {
-	
 	public static int marcos;
 	public static int paginas;
 	public static float localidad;
 	public static int[] referencias = new int[1000];
 	
+	public static final char lleno_referenciado = (char)255;
+	public static final char lleno_no_referenciado = (char)254;
+	public static final char vacio = (char)0;
+	
 	private static char[][] tabla_paginas;
-	private static boolean termino =false;
+	private static boolean termino;
 	
 	public static char[][] getTablaPaginas() {
 		return tabla_paginas;
@@ -22,15 +25,13 @@ public class MMU {
 	public static boolean getTermino() {
 		return termino;
 	}
-	public static int fallosPag = 0;
-	public static int aumentarfallo() {
-		fallosPag++;
-		return fallosPag;
-	}
-	public synchronized static void modificarTablaPaginas(int fila, int columna, char valor)
+	public static int fallosPag;
+
+	public synchronized static void modificarTablaPaginas(int fila, char valor)
 	{
-		tabla_paginas[fila][columna]= valor;
+		tabla_paginas[fila][0]= valor;
 	}
+	
 	public static void main(String[] args){
 		try {
 			File archivo = new File ("data/referencias3.txt");
@@ -61,8 +62,9 @@ public class MMU {
 			scanner.close();
 			
 			termino = false;
+			fallosPag = 0;
 			
-			Thread1 primero = new Thread1(referencias, marcos);
+			Thread1 primero = new Thread1(marcos);
 			primero.start();
 			Thread2 segundo= new Thread2();
 			segundo.start();
@@ -70,8 +72,5 @@ public class MMU {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
 	}
-
 }
