@@ -29,20 +29,21 @@ public class Thread1 extends Thread {
 								}
 								marcos[i]=referenciactual;
 								fallodepaginainic(referenciactual);
-								actual++;
+
 								if(i==marcos.length-1)
 								{
 									cupo = false;
 								}
+								actual++;
 								break;
 							}
 							else if( marcos[i]==referenciactual)
 							{
 								synchronized (System.out) {
-									System.out.println(" está repetido"+actual);
+									System.out.println(" está repetido el "+referenciactual);
 								}
-								actual++;
 								pasacasual(referenciactual);
+								actual++;
 								break;
 							}
 						}
@@ -59,11 +60,11 @@ public class Thread1 extends Thread {
 							{
 								//esta entonces vamos a pasar derecho
 								synchronized (System.out) {
-									System.out.println(" está repetido"+actual);
+									System.out.println(" está repetido"+ referenciactual);
 								}
 								estaenRam=true;
-								actual++;
 								pasacasual(referenciactual);
+								actual++;
 							}
 						}
 
@@ -72,11 +73,16 @@ public class Thread1 extends Thread {
 							
 							//fallo de pagina 
 							fallodepagina(referenciactual);
-							actual++;
+							
 							synchronized (System.out) {
 								System.out.println("Fallo #"+ MMU.fallosPag+ " Ref " + referenciactual);
+								String rta ="";
+								for (int i = 0; i < marcos.length; i++) {
+									rta+=marcos[i]+", ";
+								}
+								System.out.println("Quedan: "+ rta);
 							}
-
+							actual++;
 						}
 					}
 				}

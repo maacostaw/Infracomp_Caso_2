@@ -8,7 +8,7 @@ public class MMU {
 	public static int marcos;
 	public static int paginas;
 	public static float localidad;
-	public static int[] referencias = new int[16];
+	public static int[] referencias = new int[1000];
 	
 	private static char[][] tabla_paginas;
 	private static boolean termino =false;
@@ -33,7 +33,7 @@ public class MMU {
 	}
 	public static void main(String[] args){
 		try {
-			File archivo = new File ("data/referencias4_16.txt");
+			File archivo = new File ("data/referencias1.txt");
 			Scanner scanner = new Scanner(archivo);
 
 			String sMarcos = scanner.nextLine();
@@ -47,7 +47,7 @@ public class MMU {
 			localidad = Float.parseFloat(sNivelLocalidad);
 
 			int i = 0;
-			while (i < 16) {
+			while (i < 1000) {
 				String sReferencia = scanner.nextLine();
 				referencias[i] = Integer.parseInt(sReferencia);
 				i+=1;
