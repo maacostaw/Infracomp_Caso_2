@@ -20,10 +20,13 @@ public class Thread1 extends Thread {
 				int referenciactual = referencias[actual];
 				if (cupo == true)
 				{
-					for (int i = 0; i < marcos.length; i++) {
+					for (int i = 0; i < marcos.length && cupo == true; i++) {
 						synchronized(MMU.getTablaPaginas()){
 							if(marcos[i]==-1)
 							{
+								synchronized (System.out) {
+									System.out.println("no hay marco"+actual+" guarda: "+referenciactual);
+								}
 								marcos[i]=referenciactual;
 								fallodepaginainic(referenciactual);
 								actual++;
@@ -33,34 +36,52 @@ public class Thread1 extends Thread {
 								}
 								break;
 							}
+							else if( marcos[i]==referenciactual)
+							{
+								synchronized (System.out) {
+									System.out.println(" está repetido"+actual);
+								}
+								actual++;
+								pasacasual(referenciactual);
+								break;
+							}
 						}
 					}
 				}
 				else
 				{
 					//Esta en RAM? 
+					
 					boolean estaenRam=false;
-					for (int i = 0; i < marcos.length && !estaenRam; i++) {
-						synchronized(MMU.getTablaPaginas()){
+					synchronized(MMU.getTablaPaginas()){
+						for (int i = 0; i < marcos.length && !estaenRam; i++) {
 							if(marcos[i]==referenciactual) 
 							{
 								//esta entonces vamos a pasar derecho
+								synchronized (System.out) {
+									System.out.println(" está repetido"+actual);
+								}
 								estaenRam=true;
 								actual++;
-								fallodepaginainic(referenciactual);
+								pasacasual(referenciactual);
+							}
+						}
+
+						if(estaenRam == false)
+						{
+							synchronized (System.out) {
+								System.out.println(" fallo"+ actual+" con ref "+ referenciactual);
 							}
 
-
-							if(estaenRam == false)
-							{
-								//fallo de pagina 
-								fallodepagina(referenciactual);
-								actual++;
-							}
+							//fallo de pagina 
+							fallodepagina(referenciactual);
+							actual++;
 						}
 					}
 				}
 			}
+
+
 			MMU.cambiartermino();
 			System.out.println("se detectaron "+MMU.fallosPag+" fallos de pagina");
 		}
@@ -68,6 +89,13 @@ public class Thread1 extends Thread {
 			// TODO: handle exception
 			System.err.println();
 		}
+	}
+
+	public void pasacasual(int valor)
+	{
+		char lleno_referenciado = (char)255;
+		//cambio de estado
+		MMU.modificarTablaPaginas(valor, 0, lleno_referenciado);
 	}
 
 	public void fallodepaginainic(int valor)
@@ -80,12 +108,17 @@ public class Thread1 extends Thread {
 
 	public void fallodepagina(int valor)
 	{
-		char minimo = MMU.getTablaPaginas()[marcos[0]][1];
+		int valorminimo= marcos[0];
+		char minimo = MMU.getTablaPaginas()[valorminimo][1];
 		int pos = 0;
-		int pag= marcos[0];
+		int pag= valorminimo;
 		for (int i = 1; i < marcos.length; i++) {
+					synchronized (System.out) {
+						System.out.println( (int) MMU.getTablaPaginas()[marcos[i]][1] +" min "+ (int)minimo );
+					}
 			if(MMU.getTablaPaginas()[marcos[i]][1]<minimo)
 			{
+				
 				minimo = MMU.getTablaPaginas()[marcos[i]][1];
 				pos = i;
 				pag = marcos[i];
