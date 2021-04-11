@@ -37,7 +37,7 @@ public class MMU {
 	
 	public static void main(String[] args){
 		try {
-			File archivo = new File ("data/referencias4.txt");
+			File archivo = new File ("data/" + args[0]);
 			Scanner scanner = new Scanner(archivo);
 
 			String sMarcos = scanner.nextLine();
