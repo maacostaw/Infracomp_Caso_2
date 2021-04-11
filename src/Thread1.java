@@ -16,7 +16,7 @@ public class Thread1 extends Thread {
 		try{
 			inicializararreglomarco();
 			Thread.sleep(5);
-			while(referencias.length-1>actual){
+			while(referencias.length>actual){
 				int referenciactual = referencias[actual];
 				if (cupo == true)
 				{
@@ -24,9 +24,9 @@ public class Thread1 extends Thread {
 						synchronized(MMU.getTablaPaginas()){
 							if(marcos[i]==-1)
 							{
-								synchronized (System.out) {
+								/*synchronized (System.out) {
 									System.out.println("no hay marco"+actual+" guarda: "+referenciactual);
-								}
+								}*/
 								marcos[i]=referenciactual;
 								fallodepaginainic(referenciactual);
 
@@ -39,9 +39,9 @@ public class Thread1 extends Thread {
 							}
 							else if( marcos[i]==referenciactual)
 							{
-								synchronized (System.out) {
+								/*synchronized (System.out) {
 									System.out.println(" está repetido el "+referenciactual);
-								}
+								}*/
 								pasacasual(referenciactual);
 								actual++;
 								break;
@@ -59,9 +59,9 @@ public class Thread1 extends Thread {
 							if(marcos[i]==referenciactual) 
 							{
 								//esta entonces vamos a pasar derecho
-								synchronized (System.out) {
+								/*synchronized (System.out) {
 									System.out.println(" está repetido"+ referenciactual);
-								}
+								}*/
 								estaenRam=true;
 								pasacasual(referenciactual);
 								actual++;
@@ -73,7 +73,7 @@ public class Thread1 extends Thread {
 							
 							//fallo de pagina 
 							fallodepagina(referenciactual);
-							
+							/*
 							synchronized (System.out) {
 								System.out.println("Fallo #"+ MMU.fallosPag+ " Ref " + referenciactual);
 								String rta ="";
@@ -81,7 +81,7 @@ public class Thread1 extends Thread {
 									rta+=marcos[i]+", ";
 								}
 								System.out.println("Quedan: "+ rta);
-							}
+							}*/
 							actual++;
 						}
 					}
@@ -128,10 +128,10 @@ public class Thread1 extends Thread {
 				pos = i;
 				pag = marcos[i];
 			}
-		}
+		}/*
 		synchronized (System.out) {
 			System.out.println("Se reemplaza: " + marcos[pos]);
-		}
+		}*/
 		marcos[pos]= valor;
 		MMU.aumentarfallo();
 		char vacio = (char)0;
