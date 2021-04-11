@@ -11,16 +11,26 @@ public class MMU {
 	public static int[] referencias = new int[1000];
 	
 	private static char[][] tabla_paginas;
-	private static boolean termino;
+	private static boolean termino =false;
 	
 	public static char[][] getTablaPaginas() {
 		return tabla_paginas;
 	}
-	
+	public static void cambiartermino() {
+		termino = true;
+	}
 	public static boolean getTermino() {
 		return termino;
 	}
-	
+	public static int fallosPag = 0;
+	public static int aumentarfallo() {
+		fallosPag++;
+		return fallosPag;
+	}
+	public synchronized static void modificarTablaPaginas(int fila, int columna, char valor)
+	{
+		tabla_paginas[fila][columna]= valor;
+	}
 	public static void main(String[] args){
 		try {
 			File archivo = new File ("data/referencias1.txt");
@@ -52,8 +62,8 @@ public class MMU {
 			
 			termino = false;
 			
-			//Thread1 primero = new Thread1();
-			//primero.start();
+			Thread1 primero = new Thread1(referencias, marcos);
+			primero.start();
 			Thread2 segundo= new Thread2();
 			segundo.start();
 			

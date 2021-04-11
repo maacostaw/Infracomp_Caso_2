@@ -4,7 +4,8 @@ public class Thread2 extends Thread {
 	
 	public void run() {
 		try{
-			//while(!MMU.getTermino()) {
+			while(!MMU.getTermino()) {
+				Thread.sleep(1);
 				synchronized(MMU.getTablaPaginas()){
 					int i = 0;
 					while(i<MMU.paginas) {
@@ -23,8 +24,7 @@ public class Thread2 extends Thread {
 						i+=1;
 					}
 				}
-				
-			//}
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
