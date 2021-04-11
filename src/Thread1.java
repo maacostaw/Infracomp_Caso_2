@@ -15,7 +15,7 @@ public class Thread1 extends Thread {
 	public void run(){
 		try{
 			inicializararreglomarco();
-			Thread.sleep(5);
+			Thread.sleep(1);
 			while(referencias.length-1>actual){
 				int referenciactual = referencias[actual];
 				if (cupo == true)
