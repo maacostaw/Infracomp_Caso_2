@@ -9,14 +9,18 @@ public class MMU {
 	public static float localidad;
 	public static int[] referencias = new int[1000];
 	
-	public static final char lleno_referenciado = (char)255;
-	public static final char lleno_no_referenciado = (char)254;
-	public static final char vacio = (char)0;
+	//1100000000000000000000000000000
+	public static final int lleno_referenciado = 1610612736;
+	//1000000000000000000000000000000
+	public static final int lleno_no_referenciado = 1073741824;
+	//0000000000000000000000000000000
+	public static final int vacio = 0;
 	
-	private static char[][] tabla_paginas;
+	private static int[] tabla_paginas;
 	private static boolean termino;
+	public static int fallosPag;
 	
-	public static char[][] getTablaPaginas() {
+	public static int[] getTablaPaginas() {
 		return tabla_paginas;
 	}
 	public static void cambiartermino() {
@@ -25,16 +29,15 @@ public class MMU {
 	public static boolean getTermino() {
 		return termino;
 	}
-	public static int fallosPag;
+	
 
-	public synchronized static void modificarTablaPaginas(int fila, char valor)
-	{
-		tabla_paginas[fila][0]= valor;
+	public synchronized static void modificarTablaPaginas(int fila, int valor){
+		tabla_paginas[fila] = tabla_paginas[fila] & valor;
 	}
 	
 	public static void main(String[] args){
 		try {
-			File archivo = new File ("data/referencias3.txt");
+			File archivo = new File ("data/referencias4.txt");
 			Scanner scanner = new Scanner(archivo);
 
 			String sMarcos = scanner.nextLine();
@@ -42,7 +45,7 @@ public class MMU {
 
 			String sPaginas = scanner.nextLine();
 			paginas = Integer.parseInt(sPaginas);
-			tabla_paginas = new char[paginas][2];
+			tabla_paginas = new int[paginas];
 
 			String sNivelLocalidad = scanner.nextLine();
 			localidad = Float.parseFloat(sNivelLocalidad);

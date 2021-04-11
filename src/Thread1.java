@@ -1,6 +1,8 @@
 
 //Thread encargado de actualizar el estado de la tabla de páginas
 public class Thread1 extends Thread {
+	//0011111111111111111111111111111
+	private int separador = 536870911;
 
 	private int[] marcos;
 	private int marcos_llenos = 0;
@@ -47,11 +49,11 @@ public class Thread1 extends Thread {
 		}else {
 			int pagina_min = marcos[0];
 			int marco_min = 0;
-			char minimo = MMU.getTablaPaginas()[pagina_min][1];
+			int minimo = MMU.getTablaPaginas()[pagina_min] & separador;
 			
 			for (int i = 1; i < marcos.length; i++) {
-				if(MMU.getTablaPaginas()[marcos[i]][1]<minimo){			
-					minimo = MMU.getTablaPaginas()[marcos[i]][1];
+				if((MMU.getTablaPaginas()[marcos[i]]&separador)<minimo){			
+					minimo = MMU.getTablaPaginas()[marcos[i]];
 					marco_min = i;
 					pagina_min = marcos[i];
 				}
