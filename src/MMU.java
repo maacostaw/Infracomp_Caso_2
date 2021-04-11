@@ -41,7 +41,7 @@ public class MMU {
 
 			String sPaginas = scanner.nextLine();
 			paginas = Integer.parseInt(sPaginas);
-			tabla_paginas = new char[paginas][2];
+			tabla_paginas = new char[paginas][1000];
 
 			String sNivelLocalidad = scanner.nextLine();
 			localidad = Float.parseFloat(sNivelLocalidad);
@@ -66,27 +66,6 @@ public class MMU {
 			primero.start();
 			Thread2 segundo= new Thread2();
 			segundo.start();
-			
-			/**
-			try{
-				//Aquí se crean y empiezan los productores y consumidores (numProductos) es los productos c/u
-				for (int i = 0; i < numProdCons; i++) {
-					String tipoActual = (i%2==0) ? Producto.TIPO_B : Producto.TIPO_A;
-					ThreadProductor nuevoProductor = new ThreadProductor(tipoActual);
-					nuevoProductor.start();
-					ThreadConsumidor nuevoConsumidor= new ThreadConsumidor(tipoActual);
-					nuevoConsumidor.start();
-				}
-				ThreadIntermediario primero = new ThreadIntermediario( numProductos*numProdCons);
-				primero.start();
-				ThreadIntermediario2 segundo= new ThreadIntermediario2( numProductos*numProdCons);
-				segundo.start();
-
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-			*/
 		}
 		catch (Exception e) {
 			e.printStackTrace();
