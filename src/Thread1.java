@@ -15,7 +15,7 @@ public class Thread1 extends Thread {
 	public void run(){
 		try{
 			inicializararreglomarco();
-			Thread.sleep(1);
+			Thread.sleep(5);
 			while(referencias.length-1>actual){
 				int referenciactual = referencias[actual];
 				if (cupo == true)
@@ -69,16 +69,18 @@ public class Thread1 extends Thread {
 
 						if(estaenRam == false)
 						{
-							synchronized (System.out) {
-								System.out.println(" fallo"+ actual+" con ref "+ referenciactual);
-							}
-
+							
 							//fallo de pagina 
 							fallodepagina(referenciactual);
 							actual++;
+							synchronized (System.out) {
+								System.out.println("Fallo #"+ MMU.fallosPag+ " Ref " + referenciactual);
+							}
+
 						}
 					}
 				}
+				Thread.sleep(5);
 			}
 
 
@@ -108,14 +110,11 @@ public class Thread1 extends Thread {
 
 	public void fallodepagina(int valor)
 	{
-		int valorminimo= marcos[0];
-		char minimo = MMU.getTablaPaginas()[valorminimo][1];
+		int pag= marcos[0];
 		int pos = 0;
-		int pag= valorminimo;
+		char minimo = MMU.getTablaPaginas()[pag][1];
+		
 		for (int i = 1; i < marcos.length; i++) {
-					synchronized (System.out) {
-						System.out.println( (int) MMU.getTablaPaginas()[marcos[i]][1] +" min "+ (int)minimo );
-					}
 			if(MMU.getTablaPaginas()[marcos[i]][1]<minimo)
 			{
 				
@@ -124,7 +123,10 @@ public class Thread1 extends Thread {
 				pag = marcos[i];
 			}
 		}
-		marcos[pos]= pag;
+		synchronized (System.out) {
+			System.out.println("Se reemplaza: " + marcos[pos]);
+		}
+		marcos[pos]= valor;
 		MMU.aumentarfallo();
 		char vacio = (char)0;
 		char lleno_referenciado = (char)255;

@@ -5,7 +5,7 @@ public class Thread2 extends Thread {
 	public void run() {
 		try{
 			while(!MMU.getTermino()) {
-				Thread.sleep(5);
+				Thread.sleep(1);
 				synchronized(MMU.getTablaPaginas()){
 					int i = 0;
 					while(i<MMU.paginas) {
@@ -15,10 +15,6 @@ public class Thread2 extends Thread {
 						char vacio = (char)0;
 						if(pagina[0] == vacio || pagina[0] == lleno_no_referenciado) {
 							pagina[1] = (char)(pagina[1]>>1);
-							synchronized (System.out) {
-								System.out.println((char)pagina[1]);
-							}
-
 						} 
 						if(pagina[0] == lleno_referenciado) {
 							pagina[1] = (char)(pagina[1]>>1);
