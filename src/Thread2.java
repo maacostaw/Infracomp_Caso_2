@@ -17,15 +17,14 @@ public class Thread2 extends Thread {
 						int registro = separador & pagina;
 						//Desplazo el registro
 						registro = registro>>1;
-						//Junto denuevo
-						MMU.getTablaPaginas()[pag] = estado | registro;
 						//Si el estado es lleno referenciado lo añado al registro
 						if(estado == MMU.lleno_referenciado) {
 							//Le añado el 1
-							registro = nuevo_ref | registro;
-							//Junto de nuevo pero convirtiendo en no referenciado
-							MMU.getTablaPaginas()[pag] = MMU.lleno_no_referenciado | registro;
+							estado = MMU.lleno_no_referenciado;
+							registro = registro | nuevo_ref;
 						}
+						//Junto denuevo
+						MMU.getTablaPaginas()[pag] = estado | registro;
 					}
 				}
 				Thread.sleep(1);
