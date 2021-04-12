@@ -31,7 +31,7 @@ public class Thread1 extends Thread {
 						fallodepagina(referenciactual);
 					}
 				}
-				Thread.sleep(5);
+				Thread.sleep(2);
 			}
 		}
 		catch (Exception e) {
