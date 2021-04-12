@@ -30,11 +30,6 @@ public class MMU {
 		return termino;
 	}
 	
-
-	public synchronized static void modificarTablaPaginas(int fila, int valor){
-		tabla_paginas[fila] = tabla_paginas[fila] & valor;
-	}
-	
 	public static void main(String[] args){
 		try {
 			File archivo = new File ("data/" + args[0]);
