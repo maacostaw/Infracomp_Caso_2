@@ -23,7 +23,7 @@ public class Thread1 extends Thread {
 						if(marcos[i]==referenciactual) {
 							estaenRam=true;
 							MMU.getTablaPaginas()[referenciactual] = MMU.getTablaPaginas()[referenciactual] | MMU.lleno_referenciado;
-							//System.out.println("Referencia en memoria: " + referenciactual);
+							//System.out.println("Referencia en memoria:\t\t " + referenciactual);
 						}
 					}
 					if(estaenRam == false){
@@ -45,7 +45,7 @@ public class Thread1 extends Thread {
 		if(marcos_llenos < marcos.length) {
 			marcos[marcos_llenos]=referencia;
 			marcos_llenos++;
-			//System.out.println("Fallo inicial, referencia: " + referencia);
+			//System.out.println("Fallo inicial, referencia:\t " + referencia);
 		}else {
 			int pagina_min = marcos[0];
 			int marco_min = 0;
@@ -63,7 +63,7 @@ public class Thread1 extends Thread {
 			marcos[marco_min]= referencia;
 			//Valor que vamos a retirar
 			MMU.getTablaPaginas()[referencia] = MMU.getTablaPaginas()[referencia] & separador;
-			//System.out.println("Fallo común, referencia: " + referencia);
+			//System.out.println("Fallo común, referencia:\t " + referencia);
 		}
 		//Valor que acabamos de agregar
 		MMU.getTablaPaginas()[referencia] = MMU.getTablaPaginas()[referencia] | MMU.lleno_referenciado;
